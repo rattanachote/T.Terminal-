@@ -1,2 +1,68 @@
-# T.Terminal-
-The terminal that create for TYry to clone bloomberge terminal 
+# T TERMINAL
+
+แอปพลิเคชันหน้าจอควบคุม (Dashboard) วิเคราะห์ข้อมูลตลาดหุ้นที่ออกแบบมาในสไตล์ **Bloomberg Terminal** สุดคลาสสิก แต่เน้นความทันสมัย ลื่นไหล และรองรับทุกขนาดหน้าจอ (Responsive) สร้างด้วย **Next.js** และ **React** ร่วมกับการดึงข้อมูลจริง (Real-ish time) จาก Yahoo Finance API เพื่อแสดงข้อมูลหุ้น ดัชนีตลาด ข่าวสาร และการวิเคราะห์เทียบกับ S&P 500
+
+---
+
+## ✨ ฟีเจอร์หลัก (Features)
+
+1. **Dashboard & Live Ticker (หน้า Home)**
+   - ดึงข้อมูลดัชนีชั้นนำ (เช่น S&P 500, NASDAQ, DOW JONES) พร้อมแสดงเปอร์เซ็นต์การเปลี่ยนแปลง
+   - ผู้ใช้สามารถ **แก้ไขชื่อกล่องดัชนี** ด้านบนสุด เพื่อเลือกเฝ้าดูหุ้นที่สนใจเป็นพิเศษได้ (คลิกบรรทัดชื่อตัวย่อ > พิมพ์ชื่อหุ้นใหม่ > กด Enter)
+   - กราฟจำลองการเคลื่อนไหวแบบ Real-time Tick ตลอด 1 วัน
+2. **Overview (สรุปข้อมูลหลักทรัพย์)**
+   - กราฟแท่งเทียน (Candlestick) ซูมและเลื่อนได้
+   - แสดงข้อมูลทางการเงินเบื้องต้น (Market Cap, P/E, EPS, 52 Week High/Low)
+3. **Relative Valuation (แท็บเปรียบเทียบ)**
+   - กราฟเปรียบเทียบผลตอบแทนย้อนหลัง 6 เดือนกับคู่แข่ง (Peers) 
+   - ตารางสรุปค่า P/E และ Market Cap ระหว่างกลุ่มคู่แข่ง
+4. **Rel. Index & Regression (แท็บ S&P 500)**
+   - วิเคราะห์ค่า Beta และ Alpha ด้วยกราฟ Scatter Plot Linear Regression ระหว่างหุ้นที่เลือกกับ S&P 500
+5. **Ownership & Info (ข้อมูลเจ้าของ)**
+   - จำลองตารางอ้างอิงสถาบันการเงินที่ถือหุ้น (Institutional Holders) และข้อมูลบริษัท
+6. **Real-time News (ข่าวสาร)**
+   - ดึงข่าวสารล่าสุดของหุ้นตัวนั้นพร้อมลิงก์ไปยังแหล่งข่าวจริง รองรับระบบแบ่งหน้า (Pagination)
+
+---
+
+## 🛠 เทคโนโลยีที่ใช้ (Tech Stack)
+
+- **Framework:** Next.js (App Router), React
+- **Styling:** CSS Modules, Custom Utility Classes (เช่น `.terminal-layout`, `.responsive-flex`)
+- **Charting Library:** Lightweight Charts (TradingView), Recharts
+- **Data Source:** `yahoo-finance2` (ดึงข้อมูลตลาด), NewsAPI (ตัวอย่างข่าว)
+
+---
+
+## 💻 วิธีการติดตั้งและรันโปรเจกต์ (Installation & Run)
+
+เพื่อให้แน่ใจว่าโปรเจกต์นี้ รันได้สมบูรณ์ในเครื่องคุณ ให้ทำตามขั้นตอนต่อไปนี้:
+
+1. **ติดตั้ง Dependencies** (จำเป็นต้องมี Node.js ในเครื่อง)
+   เปิด Terminal ของแอป (Command Prompt / PowerShell / VS Code Terminal) ไปที่โฟลเดอร์ของโปรเจกต์ `t-terminal` จากนั้นพิมพ์:
+   ```bash
+   npm install
+   ```
+   *หรือถ้าใช้ yarn/pnpm ก็ให้ใช้คำสั่งที่ตรงกัน เช่น `yarn install`*
+
+2. **รันเซิร์ฟเวอร์แบบ Development**
+   ```bash
+   npm run dev
+   ```
+
+3. **เปิดหน้าจอ**
+   เข้าสู่เบราว์เซอร์แล้วไปที่ [http://localhost:3000](http://localhost:3000)
+
+---
+
+## 📱 การใช้งานบนมือถือ (Mobile Responsive)
+
+โปรเจกต์นี้ได้รับการปรับแต่ง (Refactor) ให้รองรับการเข้าถึงผ่านสมาร์ทโฟนและแท็บเล็ตแล้ว:
+- เลย์เอาต์จะปรับตัวเองจากแนวนอนยาว (Row) เป็นแนวตั้งซ้อนกัน (Column) ในหน้าจอเล็ก (น้อยกว่า 768px)
+- อนุญาตให้ไถหน้าจอขึ้น-ลง (Scroll) ดูข้อมูลกราฟและตารางล่างสุดได้อย่างอิสระบนมือถือ
+
+---
+
+## ⚠️ กำจัดจุดอ่อน (Known Issues & Note)
+- **ข้อมูลแบบ Live จริงๆ (WebSockets):** ขณะนี้ใช้เทคนิค Polling (เรียก API ซ้ำๆ ทุกรอบเวลา) เพื่อไม่ให้ API โดนแบน หากต้องการนำไปใช้งานเชิงพาณิชย์ แนะนำให้ใช้ผู้ให้บริการ API ข้อมูลทางการเงิน เช่น Finnhub, Polygon.io หรือ Alpaca ที่รองรับ WebSockets
+- **ข้อมูลที่ขาดหายบางจุด:** กองทุน ETF (เช่น SPY) และดัชนี (เช่น ^VIX) จะไม่มีรายชื่อผู้ถือหุ้นหรือผลประกอบการ เนื่องจากไม่ใช่บริษัทจดทะเบียน (SEC Filings Not Applied)
